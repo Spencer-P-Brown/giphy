@@ -5,6 +5,7 @@ api.giphy.com
 /v1/gifs/search
 
 */
+
 $(document).ready(function() {
     var topics = ["Nic Cage", "Crispin Glover", "Gary Busey", "Klaus Kinski"];
 
@@ -13,7 +14,7 @@ $(document).ready(function() {
 	function displayGif() {
 
        var animal = $(this).attr("data-name");
-       var queryURL = "http://api.giphy.com/v1/gifs/random?" +
+       var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
            animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
        $.ajax({
@@ -32,6 +33,11 @@ $(document).ready(function() {
                    var p = $("<p>").text("Rating: " + rating);
                    var animalImage = $("<img>");
                        animalImage.attr("src", results[i].images.fixed_height_still.url);
+                       animalImage.attr("data-still", results[i].images.fixed_height_still.url)
+                       animalImage.attr("data-animate", results[i].images.fixed_height.url)
+                       animalImage.attr("data-state", "animate");
+                       animalImage.addClass("animate");
+
 
                    gifDiv.append(p);
                    gifDiv.append(animalImage);
@@ -58,15 +64,26 @@ $(document).ready(function() {
 	$("#add-gif").on("click", function(event){
 		event.preventDefault();
 		var gif = $("#gif-input").val().trim();
-		topics.push(gif);
-		buttonShow();
+    if (gif) {
+  		topics.push(gif);
+  		buttonShow();
+    }
 		$("#add-a-btn")[0].reset();	
 	});
 
 	$(document).on("click", ".gif", displayGif);
 
 
+	$(document).on("click", ".animate", function() {
 
+		var state = $(this).attr("data-state");
 
-
+		if (state === "still") {
+		$(this).attr("src", $(this).attr("data-animate"));
+		$(this).attr("data-state", "animate");
+		} else {
+		$(this).attr("src", $(this).attr("data-still"));
+		$(this).attr("data-state", "still");
+	}
+   });
 });
