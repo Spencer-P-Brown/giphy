@@ -13,9 +13,9 @@ $(document).ready(function() {
 
 	function displayGif() {
 
-       var animal = $(this).attr("data-name");
+       var crazyPerson = $(this).attr("data-name");
        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-           animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+           crazyPerson + "&api_key=dc6zaTOxFJmzC&limit=10";
 
        $.ajax({
            url: queryURL,
@@ -26,21 +26,20 @@ $(document).ready(function() {
            var results = response.data;
 
            for (var i=0; i < results.length; i++) {
-
                if (results[i].rating) {
                    var gifDiv = $("<div class='item'>");
                    var rating = results[i].rating;
                    var p = $("<p>").text("Rating: " + rating);
-                   var animalImage = $("<img>");
-                       animalImage.attr("src", results[i].images.fixed_height_still.url);
-                       animalImage.attr("data-still", results[i].images.fixed_height_still.url)
-                       animalImage.attr("data-animate", results[i].images.fixed_height.url)
-                       animalImage.attr("data-state", "animate");
-                       animalImage.addClass("animate");
+                   var crazyPersonImage = $("<img>");
+                       crazyPersonImage.attr("src", results[i].images.fixed_height_still.url);
+                       crazyPersonImage.attr("data-still", results[i].images.fixed_height_still.url)
+                       crazyPersonImage.attr("data-animate", results[i].images.fixed_height.url)
+                       crazyPersonImage.attr("data-state", "animate");
+                       crazyPersonImage.addClass("animate");
 
 
                    gifDiv.append(p);
-                   gifDiv.append(animalImage);
+                   gifDiv.append(crazyPersonImage);
 
                    $("#display-gifs").prepend(gifDiv);
                }
